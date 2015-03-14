@@ -7,7 +7,7 @@
   <annotation>
     <appinfo>
       <jaxb:schemaBindings>
-        <jaxb:package name="org.opencyc.xml.cycml"/>
+        <jaxb:package name="com.cyc.baseclient.xml.cycml"/>
       </jaxb:schemaBindings>
     </appinfo>
   </annotation>
