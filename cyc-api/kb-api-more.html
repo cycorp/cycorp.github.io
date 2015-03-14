@@ -1,0 +1,75 @@
+The KB API has two main object hierarchies:
+
+<ul>
+  <li>The <b>term hierarchy</b> and its sub-classes are used to create various Predicate Logic constructs. 
+    The main classes under <code>KBTerm</code> are <code>KBCollection</code>, <code>KBIndividual</code>, <code>Relation</code> and <code>Context</code>.</li>
+  <li>The <b>assertion hierarchy</b> is used to create Facts (Ground Atomic Formulas) and, in Release 2.0 and above, Rules. To help create 
+    and manipulate assertion sentences, the API provides the Sentence class.</li>
+</ul>
+
+<p></p>
+
+KB API objects are constructed via calls to the <code>findOrCreate()</code> and <code>get()</code> static factory methods, 
+which create and cache java-side objects that correspond to objects in the KB. Because of this mimicry, it is possible
+for a KBObject to point to an object that no longer exists in the Cyc KB. The validity 
+(or staleness) of a KB Object can be checked by the <code>KBObject.isValid()</code> method.<p></p>
+
+The KB API provides thread local variables to set bookkeeping (which time-stamps and tracks authorship for 
+assertions and term creations) and transcription (which records every KB operation), as well as default 
+context for queries and assertions. These can be found under: <code>com.cyc.kb.config.KBAPIConfiguration</code>.
+Note that <code>KBAPIConfiguration.setCurrentCyclist("&lt;the cyclist&gt;")</code> should be set for bookkeeping information to be asserted.
+<p></p>
+
+The <b>exception hierarchy</b> of the KB API provides useful information about the cause of failure of an 
+operation. All instances of <code>CycConnectionException</code> (which indicate Cyc Server unavailability) are chained 
+under <code>KBApiRuntimeException</code>s. Most instances of <code>CycApiException</code> and <code>CycApiServerSideException</code> are chained 
+under <code>KBApiServerSideExceptions</code>. Because the KB API uses cached objects, it throws a <code>StaleKBObjectException</code> 
+when an object refers to a deleted KB concept.<p></p>
+
+Below are snippets of code that show how to perform some of the most basic operations using the KB API.  
+More detailed examples can be found on the <a href='samples/combined.html'>Sample Code</a> page.
+
+<h4>Configure (per thread)</h4>
+<div class='source'>
+<pre>
+CycAccessManager.get().setCurrentAccess(
+  InteractiveCycAccessProvider.get().getAccess("localhost", 3600));
+KBAPIConfiguration.setShouldTranscriptOperations(false);
+KBAPIConfiguration.setCurrentCyclist("#$CycAdministrator");
+KBAPIConfiguration.setDefaultContext(
+  new KBAPIDefaultContext(Constants.uvMt(), Constants.inferencePSCMt()));  
+</pre>
+</div>
+
+<h4>Create a KB Term:</h4>
+<div class='source'>
+<pre>
+KBCollection actorsInMovies = KBCollectionImpl.findOrCreate("ActorInMovies");
+actorsInMovies.addGeneralization("Person");
+Context peopleDataMt = ContextImpl.get("PeopleDataMt");
+KBIndividual Nicholson = 
+  KBIndividualImpl.findOrCreate("JackNicholson", actorsInMovies, peopleDataMt);
+</pre>
+</div>
+
+<h4>Create an Assertion:</h4>
+<div class='source'>
+<pre>
+BinaryPredicate movieActors = BinaryPredicateImpl.findOrCreate("movieActors");
+KBIndividual KingOfMarvinGardens = 
+  KBIndividualImpl.findOrCreate("TheKingOfMarvinGardens-TheMovie");
+Context massMediaMt = ContextImpl.get("MassMediaDataMt");
+Sentence aSent = new SentenceImpl(movieActors, KingOfMarvinGardens, Nicholson);
+Fact nicholsonInMarvinGardens = 
+  FactImpl.findOrCreate(aSent, massMediaMt);
+</pre>
+
+<h4>Clearing the cache:</h4>
+<div class='source'>
+<pre>
+  // If your program dynamically creates and reuses the same term name, it is
+  // strongly recommended to clear the KB API object cache. 
+  KBObjectFactory.clearKBObjectCache();
+</pre>
+  
+</div>

@@ -1,0 +1,64 @@
+Each of the main packages in the Query API provides a specific piece of query-related functionality.
+<br><br>
+<style>
+  #queryTable {border-collapse: collapse}
+  #queryTable td {border: 1px solid black} 
+  #queryTable th {border: 1px solid black} 
+  #queryTable tr:nth-child(odd)		{ background-color:#fff; }
+  #queryTable tr:nth-child(even)		{ background-color:#eee; }
+</style>
+<table id="queryTable">
+  <tr>
+    <th>Package</th><th>Description</th>
+  </tr>
+  <tr>
+    <td>com.cyc.query</td><td>Run queries against a Cyc server and review the results</td>
+  </tr>
+  <tr>
+    <td>com.cyc.km.query.construction</td><td>Construct CycL queries on the basis of English query strings</td>
+  </tr>
+  <tr>
+    <td>com.cyc.km.query.export</td><td>Export the results of a Cyc query into CSV or XML</td>
+  </tr>
+  <tr>
+    <td>com.cyc.km.query.answer.justification</td><td>Provide justifications for inference results</td>
+  </tr>
+</table>
+<p/>
+<h4>Asking a Query</h4>
+<code>com.cyc.query.Query</code> provides the main functionality for running queries against a Cyc server.  Constructors
+allow Queries to be created from CycL sentences (both as Sentence objects and as Strings), as well as from stored queries in the KB
+(i.e., using the constructor that takes a KBIndividual). Answers from the Cyc query can be retrieved using
+<code>isTrue</code>, <code>isProvable</code>, <code>getResultSet</code>, <code>getAnswers</code>, and related methods.
+
+<p/>
+One crucial thing to note about the <code>Query</code> class is that if a query is either browsable (c.f. <code>setBrowsable</code>) or continuable (c.f. <code>setContinuable</code>),
+it is up to the Java application developer to <code>close()</code> each of the Query objects when finished with it.
+Continuable and browsable query objects are wrappers around server-side query objects and, if not
+properly closed, they will lead to a potentially severe memory leak.
+
+<h4>Constructing a Query from English</h4>
+The package <code>com.cyc.km.query.construction</code> is designed to allow the construction of CycL query sentences 
+based on natural language strings.  It does not provide a completely automated "English --> CycL" translation capability, but
+instead provides a way of generating small query "fragments" that can be combined, with the guidance of a human, into a relevant
+CycL query.  The <code>QuerySearch</code> class provides methods that allow a UI to show which fragments 
+were produced from which parts of the input string, thereby making it clearer to a user how the fragments
+are related to the input.  Fragments produced this way can be combined into larger queries using
+some of the methods on the Query class (e.g., <code>merge</code>, <code>findConnectedClauses</code> and others).
+
+<h4>Exporting Query Results</h4>
+The package <code>com.cyc.km.query.export</code> provides an abstract <code>ResultsExporter</code> class,
+for exporting query results, as well as two reference implementations of it for CSV and XML formats. Exporting works
+by outputting a document to a <code>PrintWriter</code>, <code>PrintStream</code>, or String, consisting
+of a header, a section describing the query, a section enumerating the answers, and a footer.
+
+<h4>Explaining the Rationale for an Answer</h4>
+The <code>com.cyc.km.query.answer.justification</code> package provides support for
+generating structured explanations for inference answers. A justification object can
+be constructed using <code>new ProofViewJustification(InferenceAnswer)</code>, for
+any answer returned by <code>Query.getAnswers()</code>. The justification has a tree
+structure, whose root node is returned by <code>getRoot()</code>. Each <code>Node</code>
+has associated CycL and NL (formatted in HTML) that can be rendered in an
+interactive interface, as well as accessors to get its parent and children nodes.
+Additionally, an entire Justification can be exported to XML via the <code>ProofViewMarhaller</code>
+class.

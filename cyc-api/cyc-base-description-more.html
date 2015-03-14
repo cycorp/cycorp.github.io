@@ -1,0 +1,25 @@
+  
+
+  <p>The functionality available through the <code>com.cyc.base</code> interfaces is part of
+  the supported Cyc Base API.  <em>Additional</em> functionality, beyond that defined in the Base API,
+  is available through the <code>com.cyc.baseclient</code> classes. However, the additional
+  functionality of the Base Client is largely provided either for backwards compatibility
+  or to facilitate particular implementation issues; 
+  as such, it may be changed or removed at any time. For this reason, developers are encouraged
+  to write code strictly against the functionality defined in the Base API whenever possible.</p>
+  
+  <p>In order to use the Base API (or any of the higher-level APIs), the Java program must know how to communicate with
+  the Cyc server. The CycAccess object provides the basic communications facilities, and is generally 
+  kept track of in a thread-local variable.  Below is one simple way to set the CycAccess for the current thread:</p>
+  <pre>
+  CycAccessManager.get().setCurrentAccess("localhost", 3600));
+  </pre>
+  <p>In some situations, the user may be allowed to specify the location of the Cyc image (e.g., in
+  applications that may run against different Cyc servers at different times).  In
+  these situations, the <code>InteractiveCycAccessProvider</code> can be helpful:</p>
+  <pre>
+  CycAccessManager.get().setCurrentAccess(InteractiveCycAccessProvider.get().getAccess("localhost", 3600));
+  </pre>
+  <p>The code above will first check to see if there is a valid Cyc image at <code>localhost:3600</code>.  If it
+  is able to find one there, it will use it.  If it is not able to contact the Cyc server at
+  that location, it will interactively prompt the user to provide the host and port for the desired Cyc server.</p>

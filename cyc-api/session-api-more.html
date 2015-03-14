@@ -1,0 +1,28 @@
+  
+
+<p>The primary use of the Session API is to provide the parameters so that the rest of the APIs can 
+  access the desired Cyc.  If no configuration is provided, applications using the Cyc Java APIs 
+  will pop up a window asking the user to specify the host and port where a Cyc server can be found.
+  In contexts where no windowing is available, the program will suffer an unrecoverable error and 
+  terminate. 
+  
+<p>A number of mechanisms are available to programatically specify the Cyc server.  Here are a couple
+  of the simplest:
+<ul><li>
+  Specify the server at the command line when you start the program:
+  <pre>
+java -Dcyc.session.server=testserver:3600 [...path to jar or class path]
+  </pre>
+</li>
+<li>
+  Specify at the command line a java properties file that contains the relevant parameters:
+  <pre>
+java -Dcyc.session.policyFile=props.properties [...path to jar or class path]
+  </pre>
+  Inside your properties file, specify the Cyc server with the property <code>cyc.session.server</code>:
+  <pre>
+cyc.session.server=testserver:3640
+  </pre>
+</li>
+</ul>
+Additional ways to specify the Cyc server will be added as the Session API matures.

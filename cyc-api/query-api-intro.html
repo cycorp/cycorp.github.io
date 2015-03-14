@@ -1,0 +1,9 @@
+The Query API provides some classes and methods for requesting and handling answers to 
+arbitrarily complex questions posed to a Cyc server. Query objects specify such requests 
+and store the answers, and can be constructed by specifying a query sentence with zero 
+or more open variables, an optional microtheory, and other parameters to guide and control 
+the inference process. Alternatively, predefined query specifications can be loaded from a 
+Cyc KB, or natural language questions can be used to produce Query objects that can then be modified or combined prior 
+to being run. Inference answers can be inspected, with representations of variable bindings 
+in CycL and NL, and complete CycL sentences for each answer. They can also be iterated over 
+using a SQL-style result set, and can be exported in CSV or XML formats.

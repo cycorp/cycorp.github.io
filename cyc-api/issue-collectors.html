@@ -1,0 +1,82 @@
+
+
+<script type="text/javascript" src="https://cycorp.atlassian.net/s/bf46ded1af52cbc22f054b45a444bbb9-T/en_US-2egp5y/6327/63/1.4.13/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=91984df1"></script>
+
+<script type="text/javascript" src="https://cycorp.atlassian.net/s/bf46ded1af52cbc22f054b45a444bbb9-T/en_US-2egp5y/6327/63/1.4.13/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=2357e1ff"></script>
+
+<script type="text/javascript" src="https://cycorp.atlassian.net/s/bf46ded1af52cbc22f054b45a444bbb9-T/en_US-2egp5y/6327/63/1.4.13/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=9dd4322d"></script>
+
+<script type="text/javascript" src="https://cycorp.atlassian.net/s/bf46ded1af52cbc22f054b45a444bbb9-T/en_US-2egp5y/6327/63/1.4.13/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=f859961d"></script>
+
+<script type = "text/javascript">
+  $(document).ready(function() {
+    window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
+      
+      // ==== Question Collector ====
+      '91984df1' : {
+        triggerFunction : function(showCollectorDialog) {
+          jQuery(".questionTrigger").click(function(e) {
+            e.preventDefault();
+            showCollectorDialog();
+          });
+        }}
+      // ==== Bug Collector ====
+      , '2357e1ff' : {
+        triggerFunction : function(showCollectorDialog) {
+        jQuery(".bugTrigger").click(function(e) {
+        e.preventDefault();
+                showCollectorDialog();
+        });
+        }}
+      // ==== Feature Request Collector ====
+      , 'f859961d' : {
+        triggerFunction : function(showCollectorDialog) {
+        jQuery(".featureTrigger").click(function(e) {
+                  e.preventDefault();
+                  showCollectorDialog();
+                });
+              }}
+      // ==== Feedback Collector ====
+      , '9dd4322d' : {
+        triggerFunction : function(showCollectorDialog) {
+        jQuery(".feedbackTrigger").click(function(e) {
+        e.preventDefault();
+                showCollectorDialog();
+        });
+        }}
+    });
+  });
+</script>
+
+
+<!--<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
+    "triggerFunction": function(showCollectorDialog) {
+            //Requries that jQuery is available! 
+            jQuery(".feedbackTrigger").click(function(e) {
+                    e.preventDefault();
+                    showCollectorDialog();
+            });
+    };
+    "triggerFunction": function(showCollectorDialog) {
+      jQuery(".questionTrigger").click(function(e) {
+        e.preventDefault();
+        showCollectorDialog();
+      });
+    };
+    "triggerFunction": function(showCollectorDialog) {
+      jQuery(".bugTrigger").click(function(e) {
+        e.preventDefault();
+        showCollectorDialog();
+      });
+    }};
+  
+  
+  </script>-->
+
+<ul class="issueCollectorMenu">
+  <li><a href="http://cycorp.atlassian.net/browse/PDI/">Browse issues (public access coming soon)</a></li>
+  <li><a class="questionTrigger" href="#">Ask a question</a></li>
+  <li><a class="bugTrigger" href="#">Report a bug</a></li>
+  <li><a class="featureTrigger" href="#">Request a feature</a></li>
+  <li><a class="feedbackTrigger" href="#">Leave feedback</a></li>
+</ul>
