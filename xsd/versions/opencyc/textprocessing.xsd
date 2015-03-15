@@ -21,7 +21,7 @@
  	<xsd:import schemaLocation="http://www.w3.org/2001/03/xml.xsd" namespace="http://www.w3.org/XML/1998/namespace"/>
 
     <xsd:import namespace="http://www.cyc.com/xsd/CycConcepts"
-                schemaLocation="http://www.cyc.com/sites/default/files/downloads/xsd/cycconcepts.xsd"/>
+                schemaLocation="http://dev.cyc.com/xsd/versions/opencyc/cycconcepts.xsd"/>
   
   <xsd:annotation>
     <xsd:appinfo>

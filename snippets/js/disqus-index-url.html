@@ -1,0 +1,14 @@
+
+<script>
+  /*
+   * Disqus treats dev.cyc.com as a distinct URL from dev.cyc.com/index.html, 
+   * which means that the same page can show different sets of comments.
+   * To avoid this, we try to normalize such URLs. - nwinant, 2014-06-17
+   */
+  var url = window.location.href;
+  var disqus_url = url;
+  if (url.substring(url.length - 1) === "/") {
+    console.log("Normalizing disqus_url");
+    disqus_url = url + "index.html";
+  }
+</script>
