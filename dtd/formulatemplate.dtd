@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='US-ASCII'?>
+
+<!ENTITY % CyclQueryDtd SYSTEM "http://dev.cyc.com/dtd/cyclQuery.dtd">
+%CyclQueryDtd;
+
+<!--
+    Typical usage:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE formulaTemplate SYSTEM "http://dev.cyc.com/dtd/formulaTemplate.dtd">
+
+    <formulaTemplate>
+    ...
+    </formulaTemplate>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT formulaTemplate (usageExamples|cyclQuery|singleEntry|argumentPositionDetails
+   |elmt|formula|id|multipleEntry|focalTerm|excludeReplacementOptions
+   |followUps|glossForTemplate|reformulationSpecification)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT reformulationSpecification (constant|CycLConstant|function)*>
+   
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT usageExamples (example)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT singleEntry EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT multipleEntry EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT example (sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT glossForTemplate (#PCDATA)>
+
+<!-- Put your DTDDoc comment here -->
+<!ELEMENT followUps (followUp)*>
+
+<!ELEMENT followUp (templateId|connective|loadMt)*>
+
+<!ELEMENT templateId (constant|CycLConstant|function)*>
+
+<!ELEMENT connective (constant|CycLConstant|Function)*>
+
+<!ELEMENT loadMt (constant|CycLConstant|Function)*>
+
+<!-- Put your DTDDoc comment here. -->
+<!ELEMENT excludeReplacementOptions (excludeReplacementOption)*>
+
+<!-- Put your DTDDoc comment here. -->
+<!ELEMENT excludeReplacementOption (CycLConstant|function|constant)*>
+
+
+<!ELEMENT argumentPositionDetails (argumentPositionDetail)*>
+
+<!ELEMENT argumentPositionDetail (explanation|glossText|argPosition|ordering
+  |templateReplacementsInvisibleForPosition|constraintsOnReplacement|candidateReplacementsForPosition
+  |isEditable|validationRequired|unknownTermForTemplatePosition)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT isEditable EMPTY>
+
+<!ELEMENT unknownTermForTemplatePosition (function|constant|number|string)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT validationRequired EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT explanation (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT glossText (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT ordering (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT templateReplacementsInvisibleForPosition EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT constraintsOnReplacement (constraintOnReplacement)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT constraintOnReplacement (function)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT candidateReplacementsForPosition (candidateReplacementForPosition)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT candidateReplacementForPosition (function|constant)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT argPosition (position)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT position (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT elmt (CycLConstant|function|constant)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT formula (sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT focalTerm (argPosition|argPositions)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT argPositions (argPosition)*>
+
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT id (CycLConstant|function|constant)*>
+

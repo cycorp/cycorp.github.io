@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='US-ASCII'?>
+
+<!ENTITY % CycMLDtd SYSTEM "http://dev.cyc.com/dtd/cycML.dtd">
+%CycMLDtd;
+
+<!--
+    Typical usage:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE cyclQuery SYSTEM "http://dev.cyc.com/dtd/cyclQuery.dtd">
+
+    <cyclQuery>
+    ...
+    </cyclQuery>
+-->
+
+<!-- This probably should go elsewhere, maybe in something like
+     XML common or the like.  -->
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT propertySymbol (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT propertyValue (number|function|constant|symbol|sentence)*>
+
+
+<!--- cyclQuery specifics -->
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT cyclQuery (queryMt|queryFormula|queryComment|queryInferenceProperties|queryID)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT queryComment (string)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT queryFormula (sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT queryID (CycLConstant|function|constant)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT queryInferenceProperties (queryInferenceProperty)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT queryInferenceProperty (propertySymbol|propertyValue)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT queryMt (function|constant)*>
+
