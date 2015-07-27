@@ -1,1 +1,85 @@
-/* You can override this file with your own styles */
+
+.section .section .section {
+  margin-left: 1em;
+  padding-left: 1em;
+}
+
+.whats-new {
+  border-radius: 10px;
+  border: solid 1px rgb(0, 146, 199);
+  width: 300px;
+  margin: 20px;
+  padding: 15px;
+  float: right;
+}
+.whats-new h1 {
+  font-style: italic;
+  margin: 5px;
+  padding: 0;
+}
+
+.whats-new-item {
+}
+
+/*
+  FAQ entries
+*/
+dl {
+  background-color: #eeeeee;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.source .source {
+  border: none;
+}
+
+.pdf {
+  font-style: italic;
+}
+.pdf:after {
+  content: " (pdf)";
+}
+
+
+
+
+
+/*
+header .subhead {
+  background-color: #eee;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+.subhead h1 {
+  font-size: 36px;
+}
+
+h1 {
+  font-size: 36px;
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 28px;
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 24px;
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 12px;
+}
+*/

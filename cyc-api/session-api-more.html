@@ -12,23 +12,19 @@
 
 <h3>Command line</h3>
 
-<ul><li>
+<p>Here are two different approaches:</p>
+
+<ol><li>
   Specify the server at the command line when you start the program:
-  <pre>
-java -Dcyc.session.server=testserver:3600 [...path to jar or class path]
-  </pre>
+  <pre>java -Dcyc.session.server=testserver:3600 [...path to jar or classpath]</pre>
 </li>
 <li>
   Specify at the command line a java properties file that contains the relevant parameters:
-  <pre>
-java -Dcyc.session.configurationFile=props.properties [...path to jar or class path]
-  </pre>
+  <pre>java -Dcyc.session.configurationFile=props.properties [...path to jar or classpath]</pre>
   Inside your properties file, specify the Cyc server with the property <code>cyc.session.server</code>:
-  <pre>
-cyc.session.server=testserver:3640
-  </pre>
+  <pre>cyc.session.server=testserver:3640</pre>
 </li>
-</ul>
+</ol>
 
 
 <h3>NetBeans IDE</h3>
@@ -40,7 +36,7 @@ other developers, as they blindly run tests from their checkout against the serv
 <em>you've</em> specified. The following approaches avoid that problem.</p>
 
 
-<h4>To set a <em>global</em> Cyc server address</h4>
+<h4>Setting a <em>global</em> Cyc server address</h4>
 
 <p>This will set a set a Cyc server which will be used by <em>all</em> projects in your NetBeans 
   IDE:</p>
@@ -58,7 +54,7 @@ other developers, as they blindly run tests from their checkout against the serv
   So long as a project is being run in NetBeans, it will use this Cyc server. Of course, you can 
   always edit or remove the value from the Global Execution Options field.</p>
 
-<h4>To set a <em>project-specific</em> Cyc server address</h4>
+<h4>Setting a <em>project-specific</em> Cyc server address</h4>
 
 <p>This will set a Cyc server to be used by a single project:</p>
 <ol>

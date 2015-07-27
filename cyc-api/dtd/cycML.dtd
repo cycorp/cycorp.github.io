@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='US-ASCII'?>
+
+<!---
+     This file contains the DTD for the CycML language
+     as generate by the CYCML.LISP file.
+ -->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT CycLConstant (uri|namespace|name|guid)*>
+
+<!--- Put your DTDDoc comment here. argument-list|Function-Denotational -->
+<!ELEMENT CycLReifiableNonAtomicTerm (argument-list|Function-Denotational)*>
+
+<!--- Put your DTDDoc comment here. argument-list|Function-Denotational -->
+<!ELEMENT CycLReifiedNonAtomicTerm (argument-list|Function-Denotational)*>
+
+<!--- Put your DTDDoc comment here. argument-list|Function-Denotational -->
+<!ELEMENT ELNonAtomicTerm (argument-list|Function-Denotational)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Function-Denotational (CycLConstant|CycLReifiableNonAtomicTerm|CycLReifiedNonAtomicTerm)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT and (constant|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT argument-list (CycLConstant|CycLReifiableNonAtomicTerm|CycLReifiedNonAtomicTerm|ELNonAtomicTerm|number|function|constant|string|variable|symbol|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT implies (constant|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT constant (name|guid)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT equiv (constant|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT forAll (variable|constant|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT function (number|function|constant|string|variable|symbol|sentence)*>
+<!ATTLIST function reified (true | false) #IMPLIED>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT guid (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT name (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT namespace (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT not (constant|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT number (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT or (constant|sentence)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT package (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT predicate (constant|function|variable|symbol)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT sentence (sentence|and|or|xor|equiv|implies|not|thereExistAtLeast|thereExistAtMost|thereExistExactly|thereExists|forAll|variable|function|predicate|constant|number|string|symbol)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT string (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT symbol (name|package)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT thereExistAtLeast (variable|number|constant|sentence|function)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT thereExistAtMost (variable|number|constant|sentence|function)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT thereExistExactly (variable|number|constant|sentence|function)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT thereExists (variable|constant|sentence|function)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT uri (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT variable (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT xor (constant|sentence)*>
+
+<!-- NOTE: DATE AND TIME NEED TO BE GOTTEN FROM XML DATATYPE SCHEMA-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT date (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT time (#PCDATA)>
+
