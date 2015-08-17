@@ -4,32 +4,6 @@
   padding-left: 1em;
 }
 
-.whats-new {
-  border-radius: 10px;
-  border: solid 1px rgb(0, 146, 199);
-  width: 300px;
-  margin: 20px;
-  padding: 15px;
-  float: right;
-}
-.whats-new h1 {
-  font-style: italic;
-  margin: 5px;
-  padding: 0;
-}
-
-.whats-new-item {
-}
-
-/*
-  FAQ entries
-*/
-dl {
-  background-color: #eeeeee;
-  border-radius: 5px;
-  padding: 10px;
-}
-
 .source .source {
   border: none;
 }
@@ -41,10 +15,103 @@ dl {
   content: " (pdf)";
 }
 
+hr {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+dl {
+  background-color: inherit;
+  border: none;
+}
+
+dt {
+  color: inherit;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+dt a:link, dt a:visited {
+  font-style: italic;
+}
+
+dd {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+
+/*
+  FAQ entries
+  ====================================================================
+*/
+.section dl {
+  background-color: #fff;
+  /* border-radius: 5px; */
+  border: none;
+  padding: 5px;
+}
+
+.section dt {
+  margin-top: 7px;
+  margin-bottom: 3px;
+}
+
+.section dd {
+  margin-top: 3px;
+  margin-bottom: 7px;
+}
+
+
+/*
+  What's new 
+  ====================================================================
+*/
+.whats-new {
+  border-radius: 10px;
+  border: solid 1px rgb(0, 146, 199);
+  min-width: 200px;
+  margin: 20px;
+  padding: 15px;
+  float: right;
+}
+
+.whats-new h1 {
+  font-style: italic;
+  white-space: nowrap;
+  margin: 5px;
+  padding: 0;
+}
+
+.whats-new-list > dl {
+  background-color: green;
+  margin: 0;
+}
+
+.whats-new-list dl dt {
+  color: inherit;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-top: 7px;
+  margin-bottom: 3px;
+}
+
+.whats-new-list dl dd {
+  white-space: normal;
+  margin-top: 3px;
+  margin-bottom: 7px;
+}
+
+.whats-new-list dl dt a, .whats-new-list dl dd a {
+  font-style: italic;
+}
 
 
 
-
+/*
+  Misc
+  ====================================================================
+*/
 /*
 header .subhead {
   background-color: #eee;

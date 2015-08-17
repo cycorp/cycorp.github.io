@@ -1,0 +1,87 @@
+/*Proof-view display */
+body { padding: 1em }
+.pf-object 			   {display:none}
+.showcycl .pf-object               {display:block}
+.query .pf-paraphrase {
+    font-weight:bold;
+}
+.answer .pf-paraphrase { font-weight:bold}
+.toggle {
+    height:0px;
+    width:0px;
+    margin-top: 3px;
+}
+div.section {
+    padding:1px;
+    margin-top:15px;
+    background-color: #edf5ff;
+}
+.section .pf-label {
+    background-color: #66C;
+    color: #FFF;
+    font-weight: bold;
+    padding-left: 0.5em;
+}
+.entry .pf-label {
+    background-color: #88E;
+    font-weight: normal;
+}
+.toggle.closed {
+    display:inline-block;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;	
+    border-left: 10px solid #B82EE6;
+}
+.toggle.open {
+    display:inline-block;
+    border-top: 10px solid #B82EE6;
+    border-right: 5px solid transparent;	
+    border-left: 5px solid transparent;
+}
+.paraphrase.container {
+    display: flex;
+    margin-top: 2px;
+}
+.pf-object			   {font-family: monospace}
+.pf-object a:link                  {color: #666666}
+.pf-object                         
+{
+    font-size: 80%; 
+    color: #666666;
+    padding-left: 0.5em;
+}
+.pf-rule .pf-label                 {font-size: 80%}
+.pf-conclusion .pf-label           {font-size: 90%}
+.pf-paraphrase                     
+{
+    font-weight: 500; 
+    display:inline-block;
+    padding-left: 0.5em;
+    padding-top: 0;
+    padding-bottom: 0.2em;
+}
+.pf-hide-cycl .pf-object           {display:none}
+.pf-label {
+    vertical-align:top;
+    font-family: sans-serif;
+    font-style: italic;
+}
+
+.subentries.hidden {
+    visibility:hidden;
+    height:0;
+    opacity:0;
+}
+.subentries.shown {
+    padding-left: 1em;
+    visibility:visible;
+    opacity:1;
+    height:auto;
+    transition: opacity 0.2s linear;
+}
+
+.answer .pf-label {vertical-align:middle}
+
+
+ul				   {margin-top: 0px; margin-bottom: 0px}
+.proof-view .highly-relevant       {font-weight: 900;}
