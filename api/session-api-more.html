@@ -1,97 +1,23 @@
   
+<h3>Configuration</h3>
 
 <p>The primary use of the Session API is to provide the parameters so that the rest of the APIs can 
   access the desired Cyc.  If no configuration is provided, applications using the Cyc Java APIs 
   will pop up a window asking the user to specify the host and port where a Cyc server can be found.
   In contexts where no windowing is available, the program will suffer an unrecoverable error and 
   terminate. 
-
-<p>A number of mechanisms are available to programatically specify the Cyc server.  Here are a 
-  few of the simplest. Additional ways to specify the Cyc server will be added as the Session API
-  matures.</p>
-
-<hr />
-
-<h3>Command line</h3>
-
-<p>Here are two different approaches:</p>
-
-<ol><li>
-  Specify the server at the command line when you start the program:
-  <pre>java -Dcyc.session.server=testserver:3600 [...path to jar or classpath]</pre>
-</li>
-<li>
-  Specify at the command line a java properties file that contains the relevant parameters:
-  <pre>java -Dcyc.session.configurationFile=props.properties [...path to jar or classpath]</pre>
-  Inside your properties file, specify the Cyc server with the property <code>cyc.session.server</code>:
-  <pre>cyc.session.server=testserver:3640</pre>
-</li>
-</ol>
-
-<hr />
-
-<h3>NetBeans IDE</h3>
-
-<p>First, an <strong>important caveat:</strong> There are a number of ways to set a Cyc server from 
-within NetBeans, but many of these approaches store your preferences in a file which is likely to 
-get added to source control. If this happens, it can cause subtle and extremely frustrating bugs for
-other developers, as they blindly run tests from their checkout against the server address 
-<em>you've</em> specified. The following approaches avoid that problem.</p>
+  
+<p>A number of mechanisms are available to specify the Cyc server.  Details may be found on the 
+  <a href="configuration/">Session API Configuration page</a>.</p>
 
 
-<h4>Setting a <em>global</em> Cyc server address</h4>
 
-<p>This will set a set a Cyc server which will be used by <em>all</em> projects in your NetBeans 
-  IDE:</p>
-<ol>
-<li>Go to 
-  <em>Tools</em> 
-  -&gt; <em>Options</em> 
-  -&gt; <em>Java</em>
-  -&gt; <em>Maven</em>.</li>
-<li>In <em>Global Execution Options</em>, type in 
-  <code>-Dcyc.session.server=localhost:3600</code> (substituting your Cyc server's address).</li> 
-<li>Click <em>OK</em>.</li>
-</ol>
-<p>That's it! Note that <em>individual projects <strong>cannot</strong> override this setting</em>.
-  So long as a project is being run in NetBeans, it will use this Cyc server. Of course, you can 
-  always edit or remove the value from the Global Execution Options field.</p>
+<h3>Connection Management</h3>
 
-<h4>Setting a <em>project-specific</em> Cyc server address</h4>
+<p>The Session API's SessionManager is ultimately responsible for overseeing connection pool 
+  management. Connections may be reused across sessions, and in most cases, you should not need to 
+  worry about directly creating, caching, or closing connections to Cyc servers. However, when 
+  necessary, it is possible to force the SessionManager to close connections.</p>
 
-<p>This will set a Cyc server to be used by a single project:</p>
-<ol>
-<li>Right click the project in the "Projects" pane.</li>
-<li>Select
-  <em>Set Configuration</em>
-  -&gt; <em>Customize...</em></li>
-<li>Click <em>Add</em>.</li>
-</ol>
-  Then, in the <em>Add configuration</em> dialog:</p>
-<ul>
-<li><strong>Configuration Id:</strong> You can enter anything, but we recommend something reasonably
-  self-identifying, like a username.</li>
-<li><strong>Keep private to this IDE instance:</strong> Make sure this is 
-  <strong><em>checked</em></strong>. This is the option which avoids the source control issues 
-  described above, so it is critical that you make sure this is checked.</li>
-<li><strong>Set properties:</strong> Set this to your server (e.g., "localhost:3600") like so: 
-  <code>cyc.session.server=localhost:3600</code></li>
-<li>Click <em>OK</em>.</li>
-</ul>
-<p>Now, with your profile highlighted, click the <em>Activate</em> button. Then click <em>Okay</em> 
-  to exit the Project Properties dialog.</p>
-
-<p>That's it! From now on, your custom configuration should be used by default, and the Cyc Core 
-  APIs should automatically use the server you specified.
-  Note that a project-specific address <em>will not</em> override a <em>global</em> address.</p>
-
-<p>To <strong>change</strong> a project-specific Cyc server address: 
-<ol>
-<li>Right click the project in the "Projects" pane.</li>
-<li>Select
-  <em>Set Configuration</em>
-  -&gt; <em>Customize...</em></li>
-<li>Make sure your custom configuration is selected and click <em>Edit</em>.</li>
-<li>Modify the value and click <em>OK</em>.</li>
-</ol>
-
+<p>For details, see
+  <a href="connection-management/">Session API connection management</a>.</p>

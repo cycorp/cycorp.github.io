@@ -23,6 +23,7 @@ com.cyc.baseclient.subl
 com.cyc.baseclient.subl.functions
 com.cyc.baseclient.subl.subtypes
 com.cyc.baseclient.subl.variables
+com.cyc.baseclient.testing
 com.cyc.baseclient.ui
 com.cyc.baseclient.util
 com.cyc.baseclient.util.query
@@ -46,4 +47,5 @@ com.cyc.session.compatibility
 com.cyc.session.connection
 com.cyc.session.exception
 com.cyc.session.internal
+com.cyc.session.selection
 com.cyc.xml.query
