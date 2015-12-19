@@ -1,0 +1,13 @@
+com.cyc.core.service
+com.cyc.kb
+com.cyc.kb.exception
+com.cyc.kb.spi
+com.cyc.nl
+com.cyc.query
+com.cyc.query.exception
+com.cyc.query.metrics
+com.cyc.query.spi
+com.cyc.session
+com.cyc.session.exception
+com.cyc.session.selection
+com.cyc.session.spi
