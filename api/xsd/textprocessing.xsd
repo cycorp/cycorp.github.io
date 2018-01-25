@@ -1,89 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-   TextProcessing.xsd
-
-   To generate code internally at Cyorp, use something like:
-     pushd  ~/src/head/cycorp/cyc/java/library/xml/textProcessing/resource/xml
-     xjc -d ~/src/head/cycorp/cyc/java/library/xml/textProcessing/generated TextProcessing.xsd -extension -b customization.xml
-     popd
--->
-
-<xsd:schema           
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:xsi="http://www.w3.org/2004/10/XMLSchema-instance"
-            targetNamespace="http://www.cyc.com/xsd/TextProcessing"
-            xmlns:tns="http://www.cyc.com/xsd/TextProcessing"
+            targetNamespace="http://ws.opencyc.org/xsd/TextProcessing"
+            xmlns:tns="http://ws.opencyc.org/xsd/TextProcessing"
             xmlns:concepts="http://www.cyc.com/xsd/CycConcepts"
-            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+            jaxb:version="2.0"
             elementFormDefault="qualified">
-
- 	<xsd:import schemaLocation="http://www.w3.org/2001/03/xml.xsd" namespace="http://www.w3.org/XML/1998/namespace"/>
-
-    <xsd:import namespace="http://www.cyc.com/xsd/CycConcepts"
-                schemaLocation="http://dev.cyc.com/xsd/cycconcepts.xsd"/>
+  
+  <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
+              schemaLocation="http://www.w3.org/2001/03/xml.xsd"/>
+  <xsd:import namespace="http://www.cyc.com/xsd/CycConcepts"
+              schemaLocation="http://dev.cyc.com/xsd/cycconcepts.xsd"/>
   
   <xsd:annotation>
     <xsd:appinfo>
       <jaxb:schemaBindings>
-        <jaxb:package name="com.cyc.xml.textprocessing"/>
+        <jaxb:package name="com.cyc.xml.textprocessing">
+          <jaxb:javadoc><![CDATA[<body>Provides basic annotation formatting capability, with a JAXB layer that allows for easy serialization and deserialization of text annotation result.</body>]]>
+          </jaxb:javadoc>
+        </jaxb:package>
       </jaxb:schemaBindings>
     </xsd:appinfo>
   </xsd:annotation>
-    <xsd:complexType name="Document">
-      <xsd:choice>
-        <xsd:element name="error" type="tns:Error"/>
-        <xsd:sequence>
-          <xsd:element name="meta"   type="tns:Meta"/>
-          <xsd:element name="tagset" type="tns:TagSet"/>
-        </xsd:sequence>
-      </xsd:choice>
-    </xsd:complexType>
-    <xsd:complexType name="Meta">
-        <xsd:sequence>
-            <xsd:element name="title" type="xsd:string"/>
-            <xsd:element name="uri"   type="xsd:anyURI"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="TagSet">
-        <xsd:sequence>
-            <xsd:element name="element" type="tns:Element" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="Element">
-        <xsd:sequence>
-            <xsd:element name="source"            type="tns:Source"/>
-            <xsd:element name="referencesElement" type="tns:ElementReference" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="sense"             type="tns:Sense"            minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-        <xsd:attribute name="id"               type="xsd:ID"     use="optional"/>
-        <xsd:attribute name="childElementRefs" type="xsd:IDREFS" use="optional"/>
-    </xsd:complexType>
-    <xsd:complexType name="Sense">
-        <xsd:sequence>
-            <xsd:element name="userAssignedWeight" type="tns:UserAssignedWeight" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="concept"            type="concepts:Concept"/>
-        </xsd:sequence>
-        <xsd:attribute name="weight" type="xsd:double" use="optional"/>
-    </xsd:complexType>
-    <xsd:complexType name="UserAssignedWeight">
-        <xsd:attribute name="weight"    type="xsd:double"/>
-        <xsd:attribute name="user"      type="xsd:string"/>
-        <xsd:attribute name="timeStamp" type="xsd:dateTime"/>
-    </xsd:complexType>
-    <xsd:complexType name="Source">
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="start" type="xsd:nonNegativeInteger"/>
-            </xsd:extension>
-        </xsd:simpleContent>
-    </xsd:complexType>
-    <xsd:complexType name="ElementReference">
-      <xsd:attribute name="ref" type="xsd:IDREF"/>
+  
+  <xsd:complexType name="Document">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+Represents the document that has been annotated.  It utilizes a form of standoff-annotation in
+order to be able to represent annotations that have poorly-aligned boundaries (i.e. are not
+completely tree-like).  Each document has a Meta object, containing meta-data about the text
+being processed (and eventually about the annotator doing the processing.  The meat of the
+annotation lies in the {@link TagSet} field, which contain all of the actual semantic
+annotations.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="error" type="tns:Error"/>
+      <xsd:sequence>
+        <xsd:element name="meta"   type="tns:Meta"/>
+        <xsd:element name="tagset" type="tns:TagSet"/>
+      </xsd:sequence>
+    </xsd:choice>
   </xsd:complexType>
+  
+  <xsd:complexType name="Meta">
+    <xsd:annotation>
+      <xsd:documentation>
+Contains the meta-information about the document that was annotated.  In particular, it contains
+a reference back to the URL of the document (if provided) and the title of the document.  In
+cases where the annotator is just provided a String to annotate, these fields may have
+uninteresting contents.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="title" type="xsd:string"/>
+      <xsd:element name="uri"   type="xsd:anyURI"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="TagSet">
+    <xsd:annotation>
+      <xsd:documentation>
+A container for the real contents of the annotations, which are found in {@link Element}s.  In
+general, elements of the TagSet will appear in the document in the same order as they appear in
+the document.  Elements that start at the same location in the original input may occur in any
+order.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="element" type="tns:Element" 
+                   minOccurs="0"
+                   maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Element">
+    <xsd:annotation>
+      <xsd:documentation>
+A single contextualized annotation for some portion of the document.  The {@link Source} field
+contains information about where this annotation was found in the document.  The {@link Sense}
+elements each contain an actual semantic annotation, and the {@link ElementReference} contains
+information relevant to co-reference resolution, when such information is available.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="source"            type="tns:Source"/>
+      <xsd:element name="referencesElement" type="tns:ElementReference"
+                   minOccurs="0"  
+                   maxOccurs="1"/>
+      <xsd:element name="sense"             type="tns:Sense"            
+                   minOccurs="0" 
+                   maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="id"               type="xsd:ID"     use="optional"/>
+    <xsd:attribute name="childElementRefs" type="xsd:IDREFS" use="optional"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Sense">
+    <xsd:annotation>
+      <xsd:documentation>
+The semantic portion of an annotation.  This may be a simple Cyc term (e.g. a constant or 
+non-atomic term, or it could be a more complicated sentence.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="userAssignedWeight" type="tns:UserAssignedWeight"
+                   minOccurs="0"
+                   maxOccurs="unbounded"/>
+      <xsd:element name="concept"            type="concepts:Concept"/>
+    </xsd:sequence>
+    <xsd:attribute name="weight" type="xsd:double" use="optional"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="UserAssignedWeight">
+    <xsd:annotation>
+      <xsd:documentation>
+A weight assigned by a human reviewer.  In general, documents returned by automatic annotators
+will not contain these elements.  They are present in this definition so they can be added later
+during a review process.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="weight"    type="xsd:double"/>
+    <xsd:attribute name="user"      type="xsd:string"/>
+    <xsd:attribute name="timeStamp" type="xsd:dateTime"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="Source">
+    <xsd:annotation>
+      <xsd:documentation>
+Contains both the actual string being annotated, as well as a character offset to help locate
+the annotated string in the original document.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="start" type="xsd:nonNegativeInteger"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  
+  <xsd:complexType name="ElementReference">
+    <xsd:attribute name="ref" type="xsd:IDREF"/>
+  </xsd:complexType>
+  
   <xsd:complexType name="Error">
     <xsd:sequence>
-      <xsd:element name="message" minOccurs="1" maxOccurs="1">
+      <xsd:element name="message"
+                   minOccurs="1"
+                   maxOccurs="1">
         <xsd:complexType>
           <xsd:simpleContent>
             <xsd:extension base="xsd:string">
@@ -92,7 +158,9 @@
           </xsd:simpleContent>
         </xsd:complexType>
       </xsd:element>
-      <xsd:element name="details" minOccurs="0" maxOccurs="1">
+      <xsd:element name="details"
+                   minOccurs="0" 
+                   maxOccurs="1">
         <xsd:complexType>
           <xsd:simpleContent>
             <xsd:extension base="xsd:string">
@@ -103,5 +171,6 @@
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
+  
   <xsd:element name="document" type="tns:Document"/>
 </xsd:schema>

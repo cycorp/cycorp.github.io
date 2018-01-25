@@ -4,9 +4,236 @@ Cyc Core API CHANGELOG
 For more information, view the [README](README.md) bundled with this release or visit the
 [Cyc Developer Center](http://dev.cyc.com/api/core/).
 
-**Important note about _backwards-compatibility:_** It is expected that more release candidates will
-follow. Until the final 1.0.0 release, it is expected that future release candidates will break
-backwards compatibility.
+
+1.1.1 - 2018-01-12
+------------------
+
+Version number incremented to reflect core client implementation update.
+
+
+1.1.0 - 2017-12-18
+------------------
+
+Javadoc corrections. References to cyc-core-client-impl updated to 1.1.0.
+
+
+1.0.0 - 2017-12-12
+------------------
+
+1.0.0 release. Future 1.x releases will be backwards-compatible, per the
+[Semantic Versioning 2.0.0](https://semver.org/) specification.
+
+
+1.0.0-rc9.0 - 2017-12-12
+------------------------
+
+Consolidates and streamlines factory methods, in addition to other assorted improvements. It is 
+_not backwards-compatible_ with earlier API releases.
+
+This release contains numerous minor improvements and cleanup in preparation for 1.0.0. 
+
+
+1.0.0-rc8.0 - 2017-12-11
+------------------------
+
+Consolidates and streamlines factory methods, in addition to other assorted improvements. It is 
+_not backwards-compatible_ with earlier API releases.
+
+#### Java 1.8
+
+Now requires Java 8 or greater to run, and `JDK 1.8` or greater to build.
+
+#### Core API Factories
+
+This release primarily simplifies all of the many factories. Previously, we had a separate factory
+for each object (Assertion -> AssertionFactory, KbTerm -> KbTermFactory, Query -> QueryFactory, 
+etc.) which was a constant headache. Now, each API has a single entry point via a service-provider 
+interface (marked by `com.cyc.CycApiEntryPoint`) for which implementations are loaded at runtime;
+e.g., `KbApiService`, `QueryApiService`, `SessionApiService`. For convenience, we then provide 
+static methods which trampoline to these factories.
+
+There are now two recommended ways to create or retrieve an object: either call static methods on
+`com.cyc.Cyc`, or on the relevant interface itself. E.g.:
+
+* `Cyc.getKbTermService().findOrCreate("SomeTerm")`
+* `Cyc.getQueryService().getQuery("SomeQueryId")`
+* `KbTerm.findOrCreate("SomeTerm)`
+* `Query.get("SomeQueryId")`
+
+Additionally, commonly-used constants can now be found on `com.cyc.Cyc.Constants`. E.g.:
+
+* `Cyc.Constants.INFERENCE_PSC`
+* `Cyc.Constants.UV_MT`
+* `Cyc.Constants.ISA`
+* `Cyc.Constants.GENLS`
+* `Cyc.Constants.TRUE_CYCL`
+* `Cyc.Constants.FALSE_CYCL`
+
+Improvements have also been added to facilitate more fluent API calls via method chaining, 
+particularly for queries. Instance methods have been added, where appropriate, which trampoline to
+factories. Query answers are returned in a QueryAnswers instance, which contains a number of 
+convenience methods. A number of typical CycL variables (`ARG`, `ARG0`, `ARG1`, `ARG2`, `VAR`, 
+`VAR0`, `VAR1`, `VAR2`, etc.) have been added to `com.cyc.Cyc.Constants` for static import. 
+
+For example, here are two different ways to run a query which finds and prints all instances of the 
+Collection `#$Dog`:
+
+    import com.cyc.kb.KbCollection;
+    import com.cyc.kb.Sentence;
+    import com.cyc.query.Query;
+    import static com.cyc.Cyc.Constants.ARG1;
+    import static com.cyc.Cyc.Constants.INFERENCE_PSC;
+    import static com.cyc.Cyc.Constants.ISA;
+    ...
+    
+    Query.get("(isa ?VAR Dog)", "InferencePSC")
+            .getAnswers()
+            .getBindingsForOnlyVariable()
+            .forEach(System.out::println);
+    
+    ...
+    
+    Sentence.get(ISA, ARG1, KbCollection.get("Dog"))
+            .toQuery(INFERENCE_PSC)
+            .getAnswers()
+            .getBindingsForVariable(ARG1)
+            .forEach(System.out::println);
+
+#### KB API
+
+* Adds static factory methods to KbObject interfaces. E.g., `KbTerm#findOrCreate(String)`, 
+  `KbTerm#get(String)`, etc.
+* Adds abstract base classes for implementing KbObjects per decorator pattern: `com.cyc.kb.wrapper`.
+  There is only partial coverage for the KbObject hierarchy at the moment, but this will be fleshed
+  out soon.
+
+#### Query API
+
+* Adds static factory methods to Query API interfaces. E.g., `Query#getQuery(String)`, 
+  `ProofViewSpecification#get()`, `ProofView#getProofView(QueryAnswer, ProofViewSpecification)`.
+
+#### Session API
+
+* Adds static factory method to CycSession interface: `CycSession#getCurrentSession()`.
+* `CycAddress` interface replaces `CycServerAddress` and `CycServer`, for which the nomenclature was
+  too ambiguous.
+* Add `CycAddress#getConcurrencyLevel()`, which represents the maximum # of simultaneous jobs that 
+  can be delegated to a particular server.
+
+
+1.0.0-rc7.0 - 2017-07-28
+------------------------
+
+Refactors a number of interfaces to improve clarity, particularly in the KB API. It is 
+_not backwards-compatible_ with earlier API releases.
+
+#### Java 1.7
+
+Now requires Java 7 or greater to run, and `JDK 1.7` or greater to build.
+
+#### KB API
+
+A number of methods on `com.cyc.kb.KbObject` have been moved to subtypes to better reflect their
+relevance within the type hierarchy, and some have been renamed for clarity or consistency. For
+example:
+
+    KbObject#addFact      -> KbPredicate#addFact
+	
+    KbObject#getValues    -> KbPredicate#getValuesForArgPosition
+                          -> KbPredicate#getValuesForArgPositionWithMatchArg
+						  
+    KbObject#formulaArity -> Assertion#getArity
+                          -> KbTerm#getArity
+                          -> Sentence#getArity
+
+A few methods have also had their arg signatures modified to reflect these changes. In particular,
+methods which had required a predicate for their first arg were moved to `KbPredicate` and their
+arg signatures were updated accordingly. For example:
+
+       KbObject    #addFact(Context ctx, KbPredicate pred, int thisArgPos, Object... otherArgs)
+    -> KbPredicate #addFact(Context ctx, Object... args)
+    
+       KbObject    #getFact(Context ctx, KbPredicate pred, int thisArgPos, Object... otherArgs)
+    -> KbPredicate #getFact(Context ctx, Object... args)
+   	
+       KbObject    #getFacts(KbPredicate pred, int thisArgPos, Context ctx)	 
+    -> KbPredicate #getFacts(Object arg, int argPosition, Context ctx)
+   	
+       KbObject    #getSentence(KbPredicate pred, int thisArgPos, Object... otherArgs)	 
+    -> KbPredicate #getSentence(Object... args)
+    
+       KbObject    #getValues(KbPredicate pred, int thisArgPos, int valuePosition, Context ctx)
+    -> KbPredicate #getValuesForArgPosition(Object arg, int argPosition, int valuePosition, Context ctx)
+
+This update also includes assorted refactorings which shouldn't impact existing application code: a 
+few service provider interfaces have been renamed, some unnecessary generics have been removed from 
+some SPIs, `com.cyc.query.graphs` is now `com.cyc.query.graph`, etc.
+
+#### Query API
+
+`com.cyc.query.QuerySpecification` no longer has any mutating methods on it; those are on the new 
+`com.cyc.query.QuerySpecification.MutableQuerySpecification`, which is extended by 
+`com.cyc.query.Query`. QuerySpecification is useful for cases where something wants to make the 
+details of a Query available to external processes (for reporting, etc.) in a read-only fashion,
+whereas MutableQuerySpecification can be used to create or modify queries & KBQs, and generally has
+a pretty bean-like interface.
+
+The map-like methods on `com.cyc.query.parameters.InferenceParameters` (`#keySet`, `#get`, 
+`#putAll`, etc.) have been moved to `InferenceParameterGetter` and `InferenceParameterSetter`, as 
+appropriate. `QuerySpecification#getInferenceParameters()` returns an InferenceParameterGetter, 
+whereas MutableQuerySpecification & Query return a full, mutable, InferenceParameters instance.
+
+
+1.0.0-rc6 - 2017-07-19
+----------------------
+
+Adds assorted new functionality. 1.0.0-rc6 is _not backwards-compatible_ with earlier API releases.
+
+#### Query API
+
+Adds support for ProofViews. To generate a ProofView:
+
+1. Call `QueryFactory#getProofViewSpecification()` to retrieve a `ProofViewSpecification`.
+2. Configure the ProofViewSpecification via its setters.
+3. Then, call `QueryFactory#getProofView(QueryAnswer, ProofViewSpecification)`.
+
+Also:
+
+* Query now extends QuerySpecification, which solely represents the query itself; processing 
+  information is still represented by Query.
+* `Query#getAnswers()` now returns `QueryAnswers` instead of a raw `List<QueryAnswer>`. QueryAnswers
+  extends `List<QueryAnswer>`, but adds several convenience methods to retrieve all bindings for a
+  particular variable, get all bindings as a list for single-variable queries, get a single binding
+  from queries which should return exactly one binding, and to print answers in a formatted table.
+* Query rules can be retrieved via `QuerySpecification#getRules()`.
+* Query indexicals cans be retrieved via `QuerySpecification#getUnresolvedIndexicals()`.
+
+#### KB API
+
+Improves support for working with quoted terms:
+
+* KbObject#isQuoted()
+* KbObject#quote()
+* KbObject#unquote()
+* KbObject#toQuoted()
+* KbObject#toUnquoted()
+
+Improves support for working with indexicals and variables:
+
+* KbObject#isIndexical()
+* KbObject#possiblyResolveIndexical(Map)
+* KbObject#resolveIndexical()
+* Sentence#getIndexicals(boolean)
+* Sentence#getVariables(boolean)
+
+Improves support for performing substitutions:
+
+* KbTerm#replaceTerms(Map)
+* Sentence#replaceTerms(Map)
+
+#### Other changes
+
+* Assorted minor changes to API methods.
 
 
 1.0.0-rc5 - 2015-12-18

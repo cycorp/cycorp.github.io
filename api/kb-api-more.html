@@ -18,14 +18,17 @@ The KB API has two main object hierarchies:
 </center>
 
 <p></p>
-A corresponding set of factory classes allow KB API objects to be constructed via calls to 
-static <code>findOrCreate()</code> and <code>get()</code> methods, which create and cache java-side
-objects that correspond to objects in the KB. For example:
+A corresponding set of factory methods allow KB API objects to be constructed via calls to 
+static <code>#findOrCreate(...)</code> and <code>#get(...)</code> methods, which create and cache
+java-side objects that correspond to objects in the KB. For example:
 <div class='source'>
 <pre>
-KbCollection actorsInMovies = KbCollectionFactory.findOrCreate("ActorInMovies");
+KbCollection actorsInMovies = KbCollection.findOrCreate("ActorInMovies");
 </pre>
 </div>
+Additional factory methods are provided by <code>com.cyc.Cyc</code>, and 
+<code>com.cyc.Cyc.Constants</code> contains frequently-used terms.
+<p></p>
 Because of caching, it is possible for a KbObject to point to an object that no longer exists in the
 Cyc KB. The validity (or staleness) of a KB Object can be checked by the 
 <code>KbObject#isValid()</code> method.
@@ -54,35 +57,31 @@ Here we are defining options programmatically, but future versions of the Sessio
 them to be defined via configuration properties.
 <div class='source'>
 <pre>
-SessionOptions options = CycSessionManager.getCurrentSession().getOptions();
+SessionOptions options = CycSession.getCurrent().getOptions();
 options.setShouldTranscriptOperations(true);
 options.setCyclistName("CycAdministrator");
-options.setDefaultContext(
-            ContextFactory.getDefaultContext(ContextFactory.UV_MT, ContextFactory.INFERENCE_PSC));
+options.setDefaultContext(Context.getDefaultContext(Constants.UV_MT, Constants.INFERENCE_PSC));
 </pre>
 </div>
 
 <h4>Create a KB Term</h4>
 <div class='source'>
 <pre>
-KbCollection actorsInMovies = KbCollectionFactory.findOrCreate("ActorInMovies");
+KbCollection actorsInMovies = KbCollection.findOrCreate("ActorInMovies");
 actorsInMovies.addGeneralization("Person");
-Context peopleDataMt = ContextFactory.get("PeopleDataMt");
-KbIndividual nicholson = 
-  KbIndividualFactory.findOrCreate("JackNicholson", actorsInMovies, peopleDataMt);
+Context peopleDataMt = Context.get("PeopleDataMt");
+KbIndividual nicholson = KbIndividual.findOrCreate("JackNicholson", actorsInMovies, peopleDataMt);
 </pre>
 </div>
 
 <h4>Create an Assertion</h4>
 <div class='source'>
 <pre>
-BinaryPredicate movieActors = BinaryPredicateFactory.findOrCreate("movieActors");
-KbIndividual kingOfMarvinGardens = 
-  KbIndividualFactory.findOrCreate("TheKingOfMarvinGardens-TheMovie");
-Context massMediaMt = ContextFactory.get("MassMediaDataMt");
-Sentence aSent = KbFactory.getSentence(movieActors, kingOfMarvinGardens, Nicholson);
-Fact nicholsonInMarvinGardens = 
-  FactFactory.findOrCreate(aSent, massMediaMt);
+BinaryPredicate movieActors = BinaryPredicate.findOrCreate("movieActors");
+KbIndividual kingOfMarvinGardens = KbIndividual.findOrCreate("TheKingOfMarvinGardens-TheMovie");
+Context massMediaMt = Context.get("MassMediaDataMt");
+Sentence aSent = Sentence.get(movieActors, kingOfMarvinGardens, Nicholson);
+Fact nicholsonInMarvinGardens = Fact.findOrCreate(aSent, massMediaMt);
 </pre>
 </div>
 
@@ -91,6 +90,6 @@ If your program dynamically creates and reuses the same term name, it is strongl
 clear the KB API object cache. 
 <div class='source'>
 <pre>
-KbFactory.clearCache();
+Cyc.getKbService().clearCache();
 </pre>
 </div>
